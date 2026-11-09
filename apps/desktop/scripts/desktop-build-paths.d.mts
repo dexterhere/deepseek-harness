@@ -1,7 +1,6 @@
-import type { DesktopAutoUpdateTarget } from './desktop-auto-update-environment.mjs'
+import type { DesktopBuildTargetName as DesktopBuildTarget } from './desktop-auto-update-environment.mjs'
 
-/** Release targets plus the Linux x64 target, which has no updater channel. */
-export type DesktopBuildTarget = DesktopAutoUpdateTarget | 'linux-x64'
+export type { DesktopBuildTarget }
 
 /** Mutable target directories plus shared download and package caches. */
 export interface DesktopTargetBuildPaths {

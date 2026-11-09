@@ -84,8 +84,10 @@ export async function uploadDesktopTarget(args: string[]): Promise<void> {
     throw new DesktopUploadUsageError('desktop upload: --purge-only requires --latest')
   }
   let fileEnvironment: NodeJS.ProcessEnv
+  const { platform } = desktopTargetPlatform(name)
+  if (platform === 'linux') throw new DesktopUploadUsageError('desktop upload: linux-x64 builds are not published')
   try {
-    fileEnvironment = loadDesktopPackageEnvironment(desktopTargetPlatform(name).platform)
+    fileEnvironment = loadDesktopPackageEnvironment(platform)
   } catch (error) {
     throw new DesktopUploadUsageError('Cannot load target dotenv; check the target dotenv file and release settings.')
   }

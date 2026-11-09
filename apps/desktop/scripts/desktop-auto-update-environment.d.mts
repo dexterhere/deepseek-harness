@@ -7,19 +7,22 @@ export type DesktopAutoUpdateEnvironment = 'test' | 'production'
 /** Directory name of one supported Desktop release target. */
 export type DesktopAutoUpdateTarget = 'mac-arm64' | 'mac-x64' | 'win-x64'
 
+/** Build target names; `linux-x64` has no update channel, so update helpers reject it at runtime. */
+export type DesktopBuildTargetName = DesktopAutoUpdateTarget | 'linux-x64'
+
 /**
  * Name the fixed installer object shared by uploading and cache refresh.
  * @param target Supported Desktop target.
  * @returns Fixed download filename.
  */
-export function desktopLatestInstallerFilename(target: DesktopAutoUpdateTarget): string
+export function desktopLatestInstallerFilename(target: DesktopBuildTargetName): string
 
 /**
  * Resolve the production website installer URL shared by approval, upload and purge.
  * @param target Supported Desktop target.
  * @returns Fixed production download URL.
  */
-export function desktopWebsiteInstallerUrl(target: DesktopAutoUpdateTarget): string
+export function desktopWebsiteInstallerUrl(target: DesktopBuildTargetName): string
 
 /** Public updater URL and object prefixes for one release target. */
 export interface DesktopAutoUpdateConfig {
@@ -64,7 +67,7 @@ export function resolveDesktopAutoUpdateTarget(
  * @param target - Supported release target.
  * @returns Filename stored beside electron-builder artifacts.
  */
-export function desktopBuildRecordFilename(target: DesktopAutoUpdateTarget): string
+export function desktopBuildRecordFilename(target: DesktopBuildTargetName): string
 
 /**
  * Return the electron-builder channel metadata filename for an application version.
