@@ -24,7 +24,8 @@ export async function smokePreparedRuntime(
 ): Promise<void> {
   const cache = await mkdtemp(join(tmpdir(), 'desktop-native-smoke-'))
   const environment = { ...scrubWindowsSigningEnvironment(process.env), NODE_OPTIONS: '',
-    NARB_NATIVE_CACHE_DIR: cache, NARB_DISABLE_NATIVE_CACHE: '0' }
+    // pnpm exports the repository's module path; the smoke must resolve only the prepared tree.
+    NODE_PATH: '', NARB_NATIVE_CACHE_DIR: cache, NARB_DISABLE_NATIVE_CACHE: '0' }
   try {
     const archive = runtimeArchivePath(root)
     if (archive !== undefined) await verifyRuntimeArchive(archive, descriptor)
