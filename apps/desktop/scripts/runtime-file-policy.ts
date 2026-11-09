@@ -43,6 +43,9 @@ export function desktopRuntimeFileExclusion(
     if (platform !== undefined && platform !== `${target.platform}-${target.arch}`) return 'node-pty other platform'
     if (file.endsWith('.pdb')) return 'node-pty debug symbols'
   }
+  // Electron on Linux links the system glib, which hijacks the glib inside sharp's native libvips and
+  // crashes it (electron#46323). Dropping the native packages makes sharp load its WebAssembly build.
+  if (target.platform === 'linux' && /^@img\/sharp-(?:libvips-)?linux/u.test(name)) return 'sharp native libvips conflicts with Electron glib'
   if (name === '@koromix/koffi-win32-x64' && entry === 'win32_x64/koffi.lib') return 'Koffi import library'
   return undefined
 }

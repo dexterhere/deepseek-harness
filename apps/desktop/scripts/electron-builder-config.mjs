@@ -256,6 +256,9 @@ export function createElectronBuilderConfig(
     },
     linux: {
       category: 'Development',
+      // The default executable name comes from the scoped package name.
+      executableName: 'deepseek-harness',
+      icon: fileURLToPath(new URL('../resources/icon-windows.png', import.meta.url)),
       target: ['AppImage'],
     },
     nsis: {
